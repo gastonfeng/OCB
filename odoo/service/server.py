@@ -862,15 +862,16 @@ Maybe you forgot to add those addons in your addons_path configuration."""
 
 def _reexec(updated_modules=None):
     """reexecute openerp-server process with (nearly) the same arguments"""
-    if odoo.tools.osutil.is_running_as_nt_service():
-        subprocess.call('net stop {0} && net start {0}'.format(nt_service_name), shell=True)
-    exe = os.path.basename(sys.executable)
-    args = stripped_sys_argv()
-    if updated_modules:
-        args += ["-u", ','.join(updated_modules)]
-    if not args or args[0] != exe:
-        args.insert(0, exe)
-    os.execv(sys.executable, args)
+    if odoo.tools.osutil.is_running_as_nt_service() or True:
+        subprocess.call('net stop {0} && net start {0}'.format(nt_service_name), shell=False)
+    else:
+        exe = os.path.basename(sys.executable)
+        args = stripped_sys_argv()
+        if updated_modules:
+            args += ["-u", ','.join(updated_modules)]
+        if not args or args[0] != exe:
+            args.insert(0, exe)
+        os.execv(sys.executable, args)
 
 def load_test_file_yml(registry, test_file):
     with registry.cursor() as cr:
@@ -963,8 +964,13 @@ def start(preload=None, stop=False):
 def restart():
     """ Restart the server
     """
+    logging.error('restart')
     if os.name == 'nt':
         # run in a thread to let the current thread return response to the caller.
+        logging.error('restart Thread 1')
         threading.Thread(target=_reexec).start()
+        logging.error('restart Thread 2')
     else:
+        logging.error('restart os.kill 1')
         os.kill(server.pid, signal.SIGHUP)
+        logging.error('restart os.kill 2')

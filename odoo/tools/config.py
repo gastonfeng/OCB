@@ -580,7 +580,7 @@ class configmanager(object):
 
     @property
     def addons_data_dir(self):
-        add_dir = os.path.join(self['data_dir'], 'addons')
+        add_dir =os.path.abspath(os.path.join(self['data_dir'], 'addons'))
         d = os.path.join(add_dir, release.series)
         if not os.path.exists(d):
             try:
