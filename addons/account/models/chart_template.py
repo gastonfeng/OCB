@@ -43,9 +43,10 @@ def migrate_tags_on_taxes(cr, registry):
 
 def preserve_existing_tags_on_taxes(cr, registry, module):
     ''' This is a utility function used to preserve existing previous tags during upgrade of the module.'''
-    xml_record_ids = registry['ir.model.data'].search(cr, SUPERUSER_ID, [('model', 'in', ['account.account.tag']), ('module', 'like', module)])
-    if xml_record_ids:
-        cr.execute("update ir_model_data set noupdate = 't' where id in %s", (tuple(xml_record_ids),))
+    env = api.Environment(cr, SUPERUSER_ID, {})
+    xml_records = env['ir.model.data'].search([('model', '=', 'account.account.tag'), ('module', 'like', module)])
+    if xml_records:
+        cr.execute("update ir_model_data set noupdate = 't' where id in %s", [tuple(xml_records.ids)])
 
 #  ---------------------------------------------------------------
 #   Account Templates: Account, Tax, Tax Code and chart. + Wizard
