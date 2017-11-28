@@ -48,5 +48,4 @@ paho-mqtt
 wechatpy
 werobot
 funcsigs
-pypiwin32
 pysftp
