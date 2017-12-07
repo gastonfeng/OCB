@@ -904,7 +904,7 @@ msgstr "Ring til ORM"
 #: model:ir.ui.view,arch_db:event.view_event_configuration
 #: model:ir.ui.view,arch_db:event.view_event_confirm
 msgid "Cancel"
-msgstr "Annullér"
+msgstr "Annuller"
 
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_event_form
@@ -1724,7 +1724,7 @@ msgstr "Måned(er)"
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_event_search
 msgid "My Events"
-msgstr "Mine aftaler"
+msgstr "Mine arrangementer"
 
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_report_event_registration_search
@@ -1854,7 +1854,7 @@ msgstr ""
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_registration_search
 msgid "Partner"
-msgstr "Partner"
+msgstr "Kontakt"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_registration_phone

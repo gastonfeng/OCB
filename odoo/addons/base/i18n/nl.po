@@ -1487,7 +1487,7 @@ msgid ""
 "invoices from picking, the system is able to add and compute the shipping line.\n"
 msgstr ""
 "\n"
-"Staat u toe om nieuwe leveringsmethodes toe te voegen in verkooporders en leveringen. ============================================================== \n"
+"Staat u toe om nieuwe vervoersmethodes toe te voegen in verkooporders en leveringen. ============================================================== \n"
 "\n"
 "U kan uw eigen vervoerder voor prijzen definiëren. Wanneer u een\n"
 "factuur aanmaakt vanuit een levering kan het systeem de verzendregel toevoegen en berekenen.\n"
@@ -11534,7 +11534,7 @@ msgstr "Meer info over fout:"
 #: code:addons/models.py:1069
 #, python-format
 msgid "Error while validating constraint"
-msgstr "Fout bij bevestigen beperking"
+msgstr "Fout bij bevestigen"
 
 #. module: base
 #: code:addons/base/ir/ir_ui_menu.py:88
