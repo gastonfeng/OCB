@@ -49,3 +49,4 @@ wechatpy
 werobot
 funcsigs
 pysftp
+pypiwin32
