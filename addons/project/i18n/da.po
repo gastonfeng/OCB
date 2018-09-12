@@ -3,7 +3,7 @@
 # * project
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # peso <peer.sommerlund@gmail.com>, 2016
 # Ejner Sønniksen <ejner@vkdata.dk>, 2016
 # Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2016
@@ -369,6 +369,10 @@ msgid ""
 "                                            <strong> Via Chrome extension</strong>\n"
 "                                        </span>"
 msgstr ""
+"<span class=\"panel-title\">\n"
+"                                            <span class=\"fa fa-puzzle-piece\"/>\n"
+"                                            <strong> Via Chrome udvidelse</strong>\n"
+"                                        </span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -589,6 +593,8 @@ msgid ""
 "<strong>Be careful about the messages you send</strong><br/>\n"
 "                                    Sending a message through Odoo will automatically send an email containing your message to all the followers including internal employees, external users or customers."
 msgstr ""
+"<strong>Vær forsigtig med beskeden du sender</strong><br/>\n"
+"                                    Når du sender en besked gennem Odoo, sendes der automatisk en email med din besked til alle følgerne inkl. interne medarbejdere, eksterne brugere eller kunder."
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -940,7 +946,7 @@ msgstr "Aktiv"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Activities"
-msgstr ""
+msgstr "Aktiviteter"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.task_type_edit
@@ -1097,6 +1103,9 @@ msgid ""
 "                                You can define here labels that will be displayed for the state instead\n"
 "                                of the default labels."
 msgstr ""
+"På hvert fase kan medarbejdere blokere eller gøre opgave / problem klar til næste fase.\n"
+"                                Du kan definere overskrifter der vil blive vist for stadiet i stedet\n"
+"                                for standard overskrifter."
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -1504,7 +1513,7 @@ msgstr "Kunde email"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Customer Service"
-msgstr ""
+msgstr "Kundeservice"
 
 #. module: project
 #. openerp-web
@@ -1518,7 +1527,7 @@ msgstr "Der er anmodet om feedback fra kunde"
 #: code:addons/project/static/src/js/web_planner_project.js:91
 #, python-format
 msgid "Customer has cancelled repair"
-msgstr ""
+msgstr "Kunde har annulleret reparation"
 
 #. module: project
 #. openerp-web
@@ -1542,7 +1551,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Customization"
-msgstr ""
+msgstr "Brugertilpasning"
 
 #. module: project
 #: model:ir.ui.menu,name:project.menu_projects
@@ -1828,7 +1837,7 @@ msgstr "Ekstra info"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Extra useful for when you're with a customer or in a meeting."
-msgstr ""
+msgstr "Særligt brugbart når du er med en kunde eller i et møde."
 
 #. module: project
 #. openerp-web
@@ -1861,7 +1870,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.view_project_project_filter
 msgid "Followed by Me"
-msgstr ""
+msgstr "Fulgt af mig"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -1921,7 +1930,7 @@ msgstr "Få fuld synkronisering med Odoo"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Get it on Google Play"
-msgstr ""
+msgstr "Få den hos Google Play"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -2006,6 +2015,12 @@ msgid ""
 "   if website is activated, portal users may see project, tasks or issues followed by\n"
 "   them or by someone of their company\n"
 msgstr ""
+"Giver synlighed på de opgaver eller problemer, der hører til det aktuelle projekt:\n"
+"- Kun ved invitation: Medarbejdere må kun se det fulgte projekt, opgaver eller spørgsmål\n"
+"- Synligt for alle medarbejdere: Medarbejdere må se hele projektet, opgaver eller spørgsmål\n"
+"- Synligt for følgende kunder: medarbejdere kan se alt\n"
+"  Hvis websitet er aktiveret, kan portalbrugere se projekt, opgaver eller problemer fulgt af\n"
+"   dem eller af nogen fra deres virksomhed\n"
 
 #. module: project
 #: code:addons/project/models/project.py:567
@@ -2086,6 +2101,8 @@ msgid ""
 "If you don't want to receive email notifications, you can uncheck the option"
 " in your"
 msgstr ""
+"Ønsker du ikke at modtage email notifikationer, kan du fjerne fluebenet i "
+"din"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -2180,14 +2197,14 @@ msgstr "Sags-version"
 #: code:addons/project/static/src/js/web_planner_project.js:72
 #, python-format
 msgid "Issue is being worked on"
-msgstr ""
+msgstr "Der arbejdes på sagen"
 
 #. module: project
 #. openerp-web
 #: code:addons/project/static/src/js/web_planner_project.js:75
 #, python-format
 msgid "Issue is resolved"
-msgstr ""
+msgstr "Sagen er løst"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -2274,7 +2291,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Keep track of messages and conversations"
-msgstr ""
+msgstr "Hold styr på beskeder og samtaler"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -3047,7 +3064,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Share files and manage versions"
-msgstr ""
+msgstr "Del filer og administrer versioner"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_project_is_favorite
@@ -3110,7 +3127,7 @@ msgstr "Fase ændret"
 #. module: project
 #: model:ir.ui.view,arch_db:project.task_type_edit
 msgid "Stage Description and Tooltips"
-msgstr ""
+msgstr "Fasebeskrivelse og værktøjstips"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task_type_name
@@ -3310,7 +3327,7 @@ msgstr "Opgaveanalyse"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Tasks are the main mechanism in Odoo and are activated by default."
-msgstr ""
+msgstr "Opgaver er hovedfunktionen i Odoo og aktiveres som standard."
 
 #. module: project
 #: model:ir.model,name:project.model_report_project_task_user
@@ -3477,7 +3494,7 @@ msgstr "Tidsestimat på opgaver"
 #. module: project
 #: model:ir.ui.view,arch_db:project.edit_project
 msgid "Time Scheduling"
-msgstr ""
+msgstr "Tidsplanlægning"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_res_company_project_time_mode_id
@@ -3591,6 +3608,8 @@ msgid ""
 "Use the <b>implementation guide</b> to setup Project Management in your "
 "company."
 msgstr ""
+"Anvend <b>implementeringsvejledningen</b> til at opsætte Projektledelse i "
+"den virksomhed."
 
 #. module: project
 #. openerp-web
@@ -3703,6 +3722,8 @@ msgid ""
 "We hope this process helped you implement our project management "
 "application."
 msgstr ""
+"Vi håber at denne proces hjalp dig med at implementere dit "
+"projektledelsesapp."
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -3924,12 +3945,12 @@ msgstr "at beskrive<br/> din oplevelse eller anbefal forbedringer !"
 #. module: project
 #: model:ir.actions.act_window,help:project.open_view_project_all
 msgid "to play with."
-msgstr ""
+msgstr "til at lege med."
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "using the above recommendations"
-msgstr ""
+msgstr "ved hjælp af ovenstående anbefalinger"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner

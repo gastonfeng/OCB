@@ -6,9 +6,9 @@ ebaysdk==2.1.4
 feedparser==5.2.1
 gevent==1.1.2
 greenlet==0.4.10
-jcconv
-Jinja2==2.8
-lxml
+jcconv==0.2.3
+Jinja2==2.8.1
+lxml==3.5.0
 Mako==1.0.4
 MarkupSafe==0.23
 mock==2.0.0

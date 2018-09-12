@@ -3,7 +3,7 @@
 # * website_partner
 # 
 # Translators:
-# kalatchev <kalatchev@gmail.com>, 2016
+# Maria Boyadjieva <marabo2000@gmail.com>, 2016
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2017
 msgid ""
 msgstr ""
@@ -22,12 +22,12 @@ msgstr ""
 #. module: website_partner
 #: model:ir.model,name:website_partner.model_res_partner
 msgid "Partner"
-msgstr "Партньор"
+msgstr "Контрагент"
 
 #. module: website_partner
 #: model:ir.ui.view,arch_db:website_partner.partner_detail
 msgid "Short Description for List View"
-msgstr ""
+msgstr "Кратко описание на 'Изглед на списък'"
 
 #. module: website_partner
 #: model:ir.model.fields,help:website_partner.field_res_users_website_url
@@ -37,36 +37,36 @@ msgstr "Пълен URL за достъп до документа през уеб
 #. module: website_partner
 #: model:ir.model.fields,field_description:website_partner.field_res_users_website_published
 msgid "Visible in Website"
-msgstr "Видим в уеб сайта"
+msgstr "Видим в уебсайта"
 
 #. module: website_partner
 #: model:ir.model.fields,field_description:website_partner.field_res_partner_website_description
 #: model:ir.model.fields,field_description:website_partner.field_res_users_website_description
 msgid "Website Partner Full Description"
-msgstr ""
+msgstr "Пълно описание на уебсайта на контрагента"
 
 #. module: website_partner
 #: model:ir.model.fields,field_description:website_partner.field_res_partner_website_short_description
 #: model:ir.model.fields,field_description:website_partner.field_res_users_website_short_description
 msgid "Website Partner Short Description"
-msgstr ""
+msgstr "Кратко описание на уебсайта на контрагента"
 
 #. module: website_partner
 #: model:ir.model.fields,field_description:website_partner.field_res_users_website_url
 msgid "Website URL"
-msgstr "URL на Уебсайта"
+msgstr "URL на уебсайт"
 
 #. module: website_partner
 #: model:ir.model.fields,field_description:website_partner.field_res_users_website_meta_description
 msgid "Website meta description"
-msgstr "Уебсайт Мета описание"
+msgstr "Мета описание на уебсайт "
 
 #. module: website_partner
 #: model:ir.model.fields,field_description:website_partner.field_res_users_website_meta_keywords
 msgid "Website meta keywords"
-msgstr "Уебсайт Мета ключови думи"
+msgstr "Мета ключови думи в уебсайт"
 
 #. module: website_partner
 #: model:ir.model.fields,field_description:website_partner.field_res_users_website_meta_title
 msgid "Website meta title"
-msgstr "Уебсайт Мета заглавие"
+msgstr "Мета заглавие на уебсайт"
