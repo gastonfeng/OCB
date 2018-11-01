@@ -25,13 +25,14 @@
 # Marco Calcagni <mcalcagni@dinamicheaziendali.it>, 2018
 # David Minneci <david@numeko.it>, 2018
 # Léonie Bouchat <lbo@odoo.com>, 2018
+# Petra <bop@odoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:26+0000\n"
 "PO-Revision-Date: 2017-06-23 13:26+0000\n"
-"Last-Translator: Léonie Bouchat <lbo@odoo.com>, 2018\n"
+"Last-Translator: Petra <bop@odoo.com>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -5533,7 +5534,7 @@ msgstr "Report"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_make_procurement_res_model
 msgid "Res Model"
-msgstr ""
+msgstr "Res Model"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_picking_form
@@ -6280,6 +6281,9 @@ msgid ""
 "Technical field used to depict a restriction on the ownership of quants to "
 "consider when marking this move as 'done'"
 msgstr ""
+"Campo tecnico usato per descrivere una restrizione sul proprietario del "
+"campo di quantità da considerare quando si contrassegna questo movimento "
+"come \"completato\"."
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_quant_negative_dest_location_id
@@ -6449,7 +6453,7 @@ msgstr ""
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_quant_package_id
 msgid "The package containing this quant"
-msgstr ""
+msgstr "Il pacchetto che contiene questo campo di quantità"
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_location_location_id
@@ -7587,13 +7591,13 @@ msgstr ""
 #: code:addons/stock/models/stock_scrap.py:72
 #, python-format
 msgid "You cannot delete a scrap which is done."
-msgstr ""
+msgstr "Non è possibile cancellare una rottamazione già effettuata."
 
 #. module: stock
 #: code:addons/stock/models/stock_inventory.py:103
 #, python-format
 msgid "You cannot delete a validated inventory adjustement."
-msgstr ""
+msgstr "Non è possibile cancellare una rettifica d'inventario convalidata."
 
 #. module: stock
 #: code:addons/stock/models/stock_inventory.py:374
@@ -7630,6 +7634,8 @@ msgid ""
 "You cannot set a negative product quantity in an inventory line:\n"
 "\t%s - qty: %s"
 msgstr ""
+"Non è possibile impostare una quantità di prodotto negativa in una riga di inventario:\n"
+"\t%s - qtà: %s"
 
 #. module: stock
 #: code:addons/stock/models/stock_move.py:919
@@ -7678,7 +7684,7 @@ msgstr ""
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_backorder_confirmation
 msgid "You have processed less products than the initial demand."
-msgstr ""
+msgstr "Hai elaborato meno prodotti rispetto alla domanda iniziale."
 
 #. module: stock
 #: code:addons/stock/models/product.py:320
@@ -7687,6 +7693,8 @@ msgid ""
 "You have products in stock that have no lot number.  You can assign serial "
 "numbers by doing an inventory.  "
 msgstr ""
+"Hai prodotti in magazzino che non hanno un numero di serie. Puoi assegnare "
+"numeri di serie faccendo un inventario. "
 
 #. module: stock
 #: code:addons/stock/models/stock_warehouse.py:768
@@ -7715,7 +7723,7 @@ msgstr ""
 #: code:addons/stock/models/stock_inventory.py:21
 #, python-format
 msgid "You must define a warehouse for the company: %s."
-msgstr ""
+msgstr "Devi definire un magazzino per l'azienda: %s. "
 
 #. module: stock
 #: code:addons/stock/models/stock_move.py:553
@@ -7743,6 +7751,8 @@ msgid ""
 "You still have some active reordering rules on this product. Please archive "
 "or delete them first."
 msgstr ""
+"Questo prodotto è ancora associato a regole di riordino. Devi archiviarle o "
+"cancellarle. "
 
 #. module: stock
 #: code:addons/stock/models/stock_move.py:226
@@ -7889,7 +7899,7 @@ msgstr "mesi"
 #: model:ir.ui.view,arch_db:stock.view_pack_operation_lot_form
 #: model:ir.ui.view,arch_db:stock.view_picking_form
 msgid "of"
-msgstr ""
+msgstr "di"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_picking_form
@@ -7911,7 +7921,7 @@ msgstr ""
 #. module: stock
 #: model:ir.model,name:stock.model_report_stock_forecast
 msgid "report.stock.forecast"
-msgstr ""
+msgstr "report.stock.forecast"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_config_settings
@@ -7921,12 +7931,12 @@ msgstr "stock.config.settings"
 #. module: stock
 #: model:ir.model,name:stock.model_stock_fixed_putaway_strat
 msgid "stock.fixed.putaway.strat"
-msgstr ""
+msgstr "stock.fixed.putaway.strat"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_return_picking_line
 msgid "stock.return.picking.line"
-msgstr ""
+msgstr "stock.return.picking.line"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_scrap
