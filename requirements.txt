@@ -7,6 +7,7 @@ ebaysdk==2.1.4
 feedparser==5.2.1
 gevent==1.1.2
 greenlet==0.4.10
+html2text
 jcconv==0.2.3
 Jinja2
 lxml
