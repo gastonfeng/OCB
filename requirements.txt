@@ -22,6 +22,7 @@ phonenumbers
 Pillow==4.0.0
 psutil==4.3.1; sys_platform != 'win32'
 psycopg2==2.7.3.1; sys_platform != 'win32'
+phonenumbers
 pydot==1.2.3
 pyldap==2.4.28; sys_platform != 'win32'
 pyparsing==2.1.10

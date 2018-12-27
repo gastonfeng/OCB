@@ -126,7 +126,7 @@ class ir_cron(models.Model):
                 # otherwise unexpected results may appear. For instance, adding
                 # 1 month in UTC to July 1st at midnight in GMT+2 gives July 30
                 # instead of August 1st!
-                now = fields.Datetime.context_timestamp(cron, datetime.now())
+                now = fields.Datetime.context_timestamp(cron, datetime.utcnow())
                 nextcall = fields.Datetime.context_timestamp(cron, fields.Datetime.from_string(job['nextcall']))
                 numbercall = job['numbercall']
 
