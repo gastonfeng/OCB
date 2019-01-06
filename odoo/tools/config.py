@@ -476,8 +476,8 @@ class configmanager(object):
         self.options['translate_modules'] = opt.translate_modules and [m.strip() for m in opt.translate_modules.split(',')] or ['all']
         self.options['translate_modules'].sort()
 
-        #dev_split = opt.dev_mode and  [s.strip() for s in opt.dev_mode.split(',')] or []
-        #self.options['dev_mode'] = 'all' in dev_split and dev_split + ['pdb', 'reload', 'qweb', 'werkzeug', 'xml'] or dev_split
+        dev_split = opt.dev_mode and  [s.strip() for s in opt.dev_mode.split(',')] or []
+        self.options['dev_mode'] = 'all' in dev_split and dev_split + ['pdb', 'reload', 'qweb', 'werkzeug', 'xml'] or dev_split
 
         if opt.pg_path:
             self.options['pg_path'] = opt.pg_path

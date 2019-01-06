@@ -143,11 +143,13 @@ class CustomerPortal(Controller):
         }
 
     @route(['/my', '/my/home'], type='http', auth="user", website=True)
+    ## ingroup url
     def home(self, **kw):
         values = self._prepare_portal_layout_values()
         return request.render("portal.portal_my_home", values)
 
     @route(['/my/account'], type='http', auth='user', website=True)
+    ## ingroup url
     def account(self, redirect=None, **post):
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id

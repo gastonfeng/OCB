@@ -128,7 +128,7 @@ msgstr "取消"
 #. module: portal
 #: model:ir.ui.view,arch_db:portal.portal_layout
 msgid "Change"
-msgstr "找零"
+msgstr "更改"
 
 #. module: portal
 #: model:ir.ui.view,arch_db:portal.portal_my_details
