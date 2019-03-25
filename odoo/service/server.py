@@ -298,18 +298,18 @@ class ThreadedServer(CommonServer):
         # to trigger _force_quit() in case some non-daemon threads won't exit cleanly.
         # threading.Thread.join() should not mask signals (at least in python 2.5).
         me = threading.currentThread()
-        _logger.debug('current thread: %r', me)
+        _logger.info('current thread: %r', me)
         for thread in threading.enumerate():
-            _logger.debug('process %r (%r)', thread, thread.isDaemon())
+            _logger.info('process %r (%r)', thread, thread.isDaemon())
             if thread != me and not thread.isDaemon() and thread.ident != self.main_thread_id:
                 while thread.isAlive():
-                    _logger.debug('join and sleep')
+                    _logger.info('join and sleep')
                     # Need a busyloop here as thread.join() masks signals
                     # and would prevent the forced shutdown.
                     thread.join(0.05)
                     time.sleep(0.05)
 
-        _logger.debug('--')
+        _logger.info('--shutdown')
         odoo.modules.registry.Registry.delete_all()
         logging.shutdown()
 
@@ -985,11 +985,13 @@ def start(preload=None, stop=False):
 
     if odoo.evented:
         server = GeventServer(odoo.service.wsgi_server.application)
+        _logger.info('run in GeventServer')
     elif config['workers']:
         if config['test_enable'] or config['test_file']:
             _logger.warning("Unit testing in workers mode could fail; use --workers 0.")
 
         server = PreforkServer(odoo.service.wsgi_server.application)
+        _logger.info('run in PreforkServer')
 
         # Workaround for Python issue24291, fixed in 3.6 (see Python issue26721)
         if sys.version_info[:2] == (3,5):
@@ -997,6 +999,7 @@ def start(preload=None, stop=False):
             werkzeug.serving.WSGIRequestHandler.wbufsize = -1
     else:
         server = ThreadedServer(odoo.service.wsgi_server.application)
+        _logger.info('run in ThreadedServer')
 
     watcher = None
     if 'reload' in config['dev_mode']:
