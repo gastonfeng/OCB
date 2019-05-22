@@ -920,7 +920,7 @@ class AccountAnalyticAccount(models.Model):
         return super(AccountAnalyticAccount, self).unlink()
 
     @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
         if args is None:
             args = []
         if self.env.context.get('current_model') == 'project.project':
