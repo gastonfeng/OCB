@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import logging
-import re
-import smtplib
-import threading
 from email import encoders
 from email.charset import Charset
 from email.header import Header
@@ -12,6 +8,10 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formataddr, formatdate, getaddresses, make_msgid
+import logging
+import re
+import smtplib
+import threading
 
 import html2text
 
@@ -27,31 +27,22 @@ SMTP_TIMEOUT = 60
 
 class MailDeliveryException(except_orm):
     """Specific exception subclass for mail delivery errors"""
-
     def __init__(self, name, value):
         super(MailDeliveryException, self).__init__(name, value)
-
 
 # Python 3: patch SMTP's internal printer/debugger
 def _print_debug(self, *args):
     _logger.debug(' '.join(str(a) for a in args))
-
-
 smtplib.SMTP._print_debug = _print_debug
-
 
 # Python 2: replace smtplib's stderr
 class WriteToLogger(object):
     def write(self, s):
         _logger.debug(s)
-
-
 smtplib.stderr = WriteToLogger()
-
 
 def is_ascii(s):
     return all(ord(cp) < 128 for cp in s)
-
 
 def encode_header(header_text):
     """Returns an appropriate representation of the given header value,
@@ -69,11 +60,10 @@ def encode_header(header_text):
     """
     if not header_text:
         return ""
-    header_text = ustr(header_text)  # FIXME: require unicode higher up?
+    header_text = ustr(header_text) # FIXME: require unicode higher up?
     if is_ascii(header_text):
         return pycompat.to_native(header_text)
     return Header(header_text, 'utf-8')
-
 
 def encode_header_param(param_text):
     """Returns an appropriate RFC2047 encoded representation of the given
@@ -91,14 +81,12 @@ def encode_header_param(param_text):
     # For details see the encode_header() method that uses the same logic
     if not param_text:
         return ""
-    param_text = ustr(param_text)  # FIXME: require unicode higher up?
+    param_text = ustr(param_text) # FIXME: require unicode higher up?
     if is_ascii(param_text):
-        return pycompat.to_native(param_text)  # TODO: is that actually necessary?
+        return pycompat.to_native(param_text) # TODO: is that actually necessary?
     return Charset("utf-8").header_encode(param_text)
 
-
 address_pattern = re.compile(r'([^ ,<@]+@[^> ,]+)')
-
 
 def extract_rfc2822_addresses(text):
     """Returns a list of valid RFC2822 addresses
@@ -118,7 +106,6 @@ def encode_rfc2822_address_header(header_text):
        ``"Name"`` portion by the RFC2047-encoded
        version, preserving the address part untouched.
     """
-
     def encode_addr(addr):
         name, email = addr
         # If s is a <text string>, then charset is a hint specifying the
@@ -132,18 +119,10 @@ def encode_rfc2822_address_header(header_text):
         # Header as a string, using an unlimited line length.", the old one
         # was "A synonym for Header.encode()." so call encode() directly?
         name = Header(pycompat.to_text(name)).encode()
-        # if the from does not follow the (name <addr>),* convention, we might
-        # try to encode meaningless strings as address, as getaddresses is naive
-        # note it would also fail on real addresses with non-ascii characters
-        try:
-            return formataddr((name, email))
-        except UnicodeEncodeError:
-            _logger.warning(_('Failed to encode the address %s\n'
-                              'from mail header:\n%s') % addr, header_text)
-            return ""
+        return formataddr((name, email))
 
     addresses = getaddresses([pycompat.to_native(ustr(header_text))])
-    return COMMASPACE.join(a for a in (encode_addr(addr) for addr in addresses) if a)
+    return COMMASPACE.join(encode_addr(a) for a in addresses)
 
 
 class IrMailServer(models.Model):
@@ -155,8 +134,7 @@ class IrMailServer(models.Model):
 
     name = fields.Char(string='Description', required=True, index=True)
     smtp_host = fields.Char(string='SMTP Server', required=True, help="Hostname or IP of SMTP server")
-    smtp_port = fields.Integer(string='SMTP Port', size=5, required=True, default=25,
-                               help="SMTP Port. Usually 465 for SSL, and 25 or 587 for other cases.")
+    smtp_port = fields.Integer(string='SMTP Port', size=5, required=True, default=25, help="SMTP Port. Usually 465 for SSL, and 25 or 587 for other cases.")
     smtp_user = fields.Char(string='Username', help="Optional username for SMTP authentication")
     smtp_pass = fields.Char(string='Password', help="Optional password for SMTP authentication")
     smtp_encryption = fields.Selection([('none', 'None'),
@@ -170,9 +148,8 @@ class IrMailServer(models.Model):
     smtp_debug = fields.Boolean(string='Debugging', help="If enabled, the full output of SMTP sessions will "
                                                          "be written to the server log at DEBUG level "
                                                          "(this is very verbose and may include confidential info!)")
-    sequence = fields.Integer(string='Priority', default=10,
-                              help="When no specific mail server is requested for a mail, the highest priority one "
-                                   "is used. Default priority is 10 (smaller number = higher priority)")
+    sequence = fields.Integer(string='Priority', default=10, help="When no specific mail server is requested for a mail, the highest priority one "
+                                                                  "is used. Default priority is 10 (smaller number = higher priority)")
     active = fields.Boolean(default=True)
 
     @api.multi
@@ -235,7 +212,7 @@ class IrMailServer(models.Model):
             smtp_password = password or tools.config.get('smtp_password')
             smtp_encryption = encryption
             if smtp_encryption is None and tools.config.get('smtp_ssl'):
-                smtp_encryption = 'starttls'  # smtp_ssl => STARTTLS as of v7
+                smtp_encryption = 'starttls' # smtp_ssl => STARTTLS as of v7
 
         if not smtp_server:
             raise UserError(
@@ -248,8 +225,8 @@ class IrMailServer(models.Model):
                 raise UserError(
                     _("Your Odoo Server does not support SMTP-over-SSL. "
                       "You could use STARTTLS instead. "
-                      "If SSL is needed, an upgrade to Python 2.6 on the server-side "
-                      "should do the trick."))
+                       "If SSL is needed, an upgrade to Python 2.6 on the server-side "
+                       "should do the trick."))
             connection = smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=SMTP_TIMEOUT)
         else:
             connection = smtplib.SMTP(smtp_server, smtp_port, timeout=SMTP_TIMEOUT)
@@ -305,14 +282,14 @@ class IrMailServer(models.Model):
            :return: the new RFC2822 email message
         """
         email_from = email_from or tools.config.get('email_from')
-        assert email_from, "You must either provide a sender address explicitly or configure " \
-                           "a global sender address in the server configuration or with the " \
+        assert email_from, "You must either provide a sender address explicitly or configure "\
+                           "a global sender address in the server configuration or with the "\
                            "--email-from startup parameter."
 
         # Note: we must force all strings to to 8-bit utf-8 when crafting message,
         #       or use encode_header() for headers, which does it automatically.
 
-        headers = headers or {}  # need valid dict later
+        headers = headers or {}         # need valid dict later
         email_cc = email_cc or []
         email_bcc = email_bcc or []
         body = body or u''
@@ -439,8 +416,7 @@ class IrMailServer(models.Model):
         # Use the default bounce address **only if** no Return-Path was
         # provided by caller.  Caller may be using Variable Envelope Return
         # Path (VERP) to detect no-longer valid email addresses.
-        #smtp_from = message['Return-Path'] or self._get_default_bounce_address() or message['From']
-        smtp_from = message['From']
+        smtp_from = message['From'] or message['Return-Path'] or self._get_default_bounce_address()
         assert smtp_from, "The Return-Path or From header is required for any outbound email"
 
         # The email's "Envelope From" (Return-Path), and all recipient addresses must only contain ASCII characters.
@@ -466,7 +442,7 @@ class IrMailServer(models.Model):
         if x_forge_to:
             # `To:` header forged, e.g. for posting on mail.channels, to avoid confusion
             del message['X-Forge-To']
-            del message['To']  # avoid multiple To: headers!
+            del message['To']           # avoid multiple To: headers!
             message['To'] = x_forge_to
 
         # Do not actually send emails in testing mode!
@@ -477,15 +453,15 @@ class IrMailServer(models.Model):
         try:
             message_id = message['Message-Id']
             smtp = smtp_session
-            smtp = smtp or self.connect(
-                smtp_server, smtp_port, smtp_user, smtp_password,
-                smtp_encryption, smtp_debug, mail_server_id=mail_server_id)
-            smtp.sendmail(smtp_from, smtp_to_list, message.as_string())
-            # do not quit() a pre-established smtp_session
-            if not smtp_session:
-                smtp.quit()
-        except smtplib.SMTPServerDisconnected:
-            raise
+            try:
+                smtp = smtp or self.connect(
+                    smtp_server, smtp_port, smtp_user, smtp_password,
+                    smtp_encryption, smtp_debug, mail_server_id=mail_server_id)
+                smtp.sendmail(smtp_from, smtp_to_list, message.as_string())
+            finally:
+                # do not quit() a pre-established smtp_session
+                if smtp is not None and not smtp_session:
+                    smtp.quit()
         except Exception as e:
             params = (ustr(smtp_server), e.__class__.__name__, ustr(e))
             msg = _("Mail delivery failed via SMTP server '%s'.\n%s: %s") % params

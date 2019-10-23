@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import json
-import werkzeug
 import itertools
-import pytz
-import babel.dates
+import json
 from collections import OrderedDict
 
-from odoo import http, fields, _
+import babel.dates
+import pytz
+import werkzeug
 from odoo.addons.http_routing.models.ir_http import slug, unslug
 from odoo.addons.website.controllers.main import QueryURL
+
+from addons.website.models.ir_http import sitemap_qs2dom
+from odoo import http, fields, _
 from odoo.exceptions import UserError
 from odoo.http import request
 from odoo.tools import html2plaintext
@@ -42,7 +44,8 @@ class WebsiteBlog(http.Controller):
             group['month'] = babel.dates.format_datetime(start, format='MMMM', tzinfo=tzinfo, locale=locale)
             group['year'] = babel.dates.format_datetime(start, format='YYYY', tzinfo=tzinfo, locale=locale)
 
-        return OrderedDict((year, [m for m in months]) for year, months in itertools.groupby(groups, lambda g: g['year']))
+        return OrderedDict(
+            (year, [m for m in months]) for year, months in itertools.groupby(groups, lambda g: g['year']))
 
     @http.route([
         '/blog',
@@ -71,12 +74,20 @@ class WebsiteBlog(http.Controller):
             'blog_url': blog_url,
         })
 
+    def sitemap_blog(env, rule, qs):
+        blog = env['blog.post']
+        dom = sitemap_qs2dom(qs, '/blog', blog._rec_name)
+        for blog_post in blog.search(dom):
+            loc = "/blog/%s/post/%s" % (slug(blog_post.blog_id), slug(blog_post))
+            if not qs or qs.lower() in loc:
+                yield {'loc': loc}
+
     @http.route([
         '/blog/<model("blog.blog"):blog>',
         '/blog/<model("blog.blog"):blog>/page/<int:page>',
         '/blog/<model("blog.blog"):blog>/tag/<string:tag>',
         '/blog/<model("blog.blog"):blog>/tag/<string:tag>/page/<int:page>',
-    ], type='http', auth="public", website=True)
+    ], type='http', auth="public", website=True, sitemap=sitemap_blog)
     def blog(self, blog=None, tag=None, page=1, **opt):
         """ Prepare all values to display the blog.
 
@@ -143,13 +154,14 @@ class WebsiteBlog(http.Controller):
         # function to create the string list of tag ids, and toggle a given one.
         # used in the 'Tags Cloud' template.
         def tags_list(tag_ids, current_tag):
-            tag_ids = list(tag_ids) # required to avoid using the same list
+            tag_ids = list(tag_ids)  # required to avoid using the same list
             if current_tag in tag_ids:
                 tag_ids.remove(current_tag)
             else:
                 tag_ids.append(current_tag)
             tag_ids = request.env['blog.tag'].browse(tag_ids).exists()
             return ','.join(slug(tag) for tag in tag_ids)
+
         values = {
             'blog': blog,
             'blogs': blogs,
@@ -157,7 +169,7 @@ class WebsiteBlog(http.Controller):
             'tags': all_tags,
             'state_info': {"state": state, "published": published_count, "unpublished": unpublished_count},
             'active_tag_ids': active_tag_ids,
-            'tags_list' : tags_list,
+            'tags_list': tags_list,
             'blog_posts': blog_posts,
             'blog_posts_cover_properties': [json.loads(b.cover_properties) for b in blog_posts],
             'pager': pager,
@@ -173,15 +185,15 @@ class WebsiteBlog(http.Controller):
         v = {}
         v['blog'] = blog
         v['base_url'] = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
-        v['posts'] = request.env['blog.post'].search([('blog_id','=', blog.id)],
-            limit=min(int(limit), 50),
-            order="post_date DESC")
+        v['posts'] = request.env['blog.post'].search([('blog_id', '=', blog.id)],
+                                                     limit=min(int(limit), 50),
+                                                     order="post_date DESC")
         v['html2plaintext'] = html2plaintext
         r = request.render("website_blog.blog_feed", v, headers=[('Content-Type', 'application/atom+xml')])
         return r
 
     @http.route([
-            '''/blog/<model("blog.blog"):blog>/post/<model("blog.post", "[('blog_id','=',blog[0])]"):blog_post>''',
+        '''/blog/<model("blog.blog"):blog>/post/<model("blog.post", "[('blog_id','=',blog[0])]"):blog_post>''',
     ], type='http', auth="public", website=True)
     def blog_post(self, blog, blog_post, tag_id=None, page=1, enable_editor=None, **post):
         """ Prepare all values to display the blog.
@@ -216,7 +228,8 @@ class WebsiteBlog(http.Controller):
         tag = None
         if tag_id:
             tag = request.env['blog.tag'].browse(int(tag_id))
-        blog_url = QueryURL('', ['blog', 'tag'], blog=blog_post.blog_id, tag=tag, date_begin=date_begin, date_end=date_end)
+        blog_url = QueryURL('', ['blog', 'tag'], blog=blog_post.blog_id, tag=tag, date_begin=date_begin,
+                            date_end=date_end)
 
         if not blog_post.blog_id.id == blog.id:
             return request.redirect("/blog/%s/post/%s" % (slug(blog_post.blog_id), slug(blog_post)))
@@ -261,7 +274,7 @@ class WebsiteBlog(http.Controller):
             request.session[request.session.sid].append(blog_post.id)
             # Increase counter
             blog_post.sudo().write({
-                'visits': blog_post.visits+1,
+                'visits': blog_post.visits + 1,
             })
         return response
 
@@ -290,12 +303,12 @@ class WebsiteBlog(http.Controller):
                 "id": message.id,
                 "author_name": message.author_id.name,
                 "author_image": message.author_id.image and \
-                    (b"data:image/png;base64,%s" % message.author_id.image) or \
-                    b'/website_blog/static/src/img/anonymous.png',
+                                (b"data:image/png;base64,%s" % message.author_id.image) or \
+                                b'/website_blog/static/src/img/anonymous.png',
                 "date": message.date,
                 'body': html2plaintext(message.body),
-                'website_published' : message.website_published,
-                'publish' : publish,
+                'website_published': message.website_published,
+                'publish': publish,
             })
         return values
 
@@ -311,7 +324,8 @@ class WebsiteBlog(http.Controller):
             'blog_id': blog_id,
             'website_published': False,
         })
-        return werkzeug.utils.redirect("/blog/%s/post/%s?enable_editor=1" % (slug(new_blog_post.blog_id), slug(new_blog_post)))
+        return werkzeug.utils.redirect(
+            "/blog/%s/post/%s?enable_editor=1" % (slug(new_blog_post.blog_id), slug(new_blog_post)))
 
     @http.route('/blog/post_duplicate', type='http', auth="public", website=True, methods=['POST'])
     def blog_post_copy(self, blog_post_id, **post):
@@ -321,13 +335,15 @@ class WebsiteBlog(http.Controller):
 
         :return redirect to the new blog created
         """
-        new_blog_post = request.env['blog.post'].with_context(mail_create_nosubscribe=True).browse(int(blog_post_id)).copy()
-        return werkzeug.utils.redirect("/blog/%s/post/%s?enable_editor=1" % (slug(new_blog_post.blog_id), slug(new_blog_post)))
+        new_blog_post = request.env['blog.post'].with_context(mail_create_nosubscribe=True).browse(
+            int(blog_post_id)).copy()
+        return werkzeug.utils.redirect(
+            "/blog/%s/post/%s?enable_editor=1" % (slug(new_blog_post.blog_id), slug(new_blog_post)))
 
     @http.route('/blog/post_get_discussion/', type='json', auth="public", website=True)
     def discussion(self, post_id=0, path=None, count=False, **post):
         domain = [('res_id', '=', int(post_id)), ('model', '=', 'blog.post'), ('path', '=', path)]
-        #check current user belongs to website publisher group
+        # check current user belongs to website publisher group
         publish = request.env.user.has_group('website.group_website_publisher')
         if not publish:
             domain.append(('website_published', '=', True))

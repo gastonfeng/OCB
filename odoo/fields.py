@@ -313,6 +313,8 @@ class Field(MetaField('DummyField', (object,), {})):
         'group_expand': None,           # name of method to expand groups in read_group()
         'prefetch': True,               # whether the field is prefetched
         'context_dependent': False,     # whether the field's value depends on context
+        'widget': None
+
     }
 
     def __init__(self, string=Default, **kwargs):
